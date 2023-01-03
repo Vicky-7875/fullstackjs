@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const mainRouter = require("./routes");
+// const apiKeyMiddleWare = require("./middlewares/apiKey");  //global
 
 /**view engine*/
 app.set("view engine", "ejs");
@@ -11,8 +12,9 @@ app.set("view engine", "ejs");
 // console.log(app.get('view engine'))
 // console.log(app.get("views"));
 
+// app.use(apiKeyMiddleWare);
 //static middleware
-// app.use(express.static("public"));
+// app.use(express.static("public"));         ///global middleware
 // app.use('/api',mainRouter); //for prefix
 app.use(mainRouter);
 
