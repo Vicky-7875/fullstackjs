@@ -3,8 +3,14 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const mainRouter = require("./routes");
+const mainRouter = require("./routes/index");
+const productRouter = require("./routes/products");
 // const apiKeyMiddleWare = require("./middlewares/apiKey");  //global
+//static middleware
+app.use(express.static("public"));         ///global middleware
+app.use(express.json());         /// res.body  middleware
+// app.use(express.urlencoded({extended:false}));         ///for normal formmiddleware
+
 
 /**view engine*/
 app.set("view engine", "ejs");
@@ -13,9 +19,8 @@ app.set("view engine", "ejs");
 // console.log(app.get("views"));
 
 // app.use(apiKeyMiddleWare);
-//static middleware
-// app.use(express.static("public"));         ///global middleware
 // app.use('/api',mainRouter); //for prefix
+app.use(productRouter);
 app.use(mainRouter);
 
 /**Routes */
