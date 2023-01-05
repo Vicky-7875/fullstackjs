@@ -20,16 +20,22 @@ const App = () => {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    if (!form.name || !form.price) {
-      return;
-    }
+    // if (!form.name || !form.price) {
+    //   return;
+    // }
     fetch("/api/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        fetchProducts();
+        setForm({
+          name: "",
+          price: "",
+        });
+      });
   }
   function updateForm(event, field) {
     if (field == "name") {
@@ -44,6 +50,17 @@ const App = () => {
       });
     }
   }
+
+  const deleteProduct = (prodId) => {
+    fetch(`/api/products/${prodId}`, {
+      method: "DELETE",  //PUT,PATCH  form update
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        fetchProducts();
+        console.log(data);
+      });
+  };
 
   return (
     <>
@@ -84,7 +101,12 @@ const App = () => {
               <span>
                 <strong>{product.name}: </strong>${product.price}
               </span>
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => {
+                  deleteProduct(product.id);
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

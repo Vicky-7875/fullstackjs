@@ -1,16 +1,16 @@
 const express = require("express");
 const path = require("path");
+const ErrorHandler = require("./errors/ErrorHandler");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const mainRouter = require("./routes/index");
 const productRouter = require("./routes/products");
-// const apiKeyMiddleWare = require("./middlewares/apiKey");  //global
+const apiKeyMiddleWare = require("./middlewares/apiKey");  //global
 //static middleware
-app.use(express.static("public"));         ///global middleware
-app.use(express.json());         /// res.body  middleware
+app.use(express.static("public")); ///global middleware
+app.use(express.json()); /// res.body  middleware
 // app.use(express.urlencoded({extended:false}));         ///for normal formmiddleware
-
 
 /**view engine*/
 app.set("view engine", "ejs");
@@ -51,6 +51,32 @@ app.use(mainRouter);
 //   res.render("404");
 // });
 
+//page not found
+
+app.use((req, res, next) => {
+  return res.json({ message: "Page not Found" });
+});
+
+//error handle middleware
+app.use((err, req, res, next) => {
+  if (err instanceof ErrorHandler) {
+    res.status(err.status).json({
+      error: {
+        message: err.msg,
+        status: err.status,
+      },
+    });
+  } else {
+    res.status(500).json({
+      error: {
+        message: err.msg,
+        status: err.status,
+      },
+    });
+  }
+
+  //   next();
+});
 app.listen(PORT, () => console.log(`listing on http://localhost:${PORT}`));
 
 //PORT=5000 node server.js

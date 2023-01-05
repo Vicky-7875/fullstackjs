@@ -1,20 +1,30 @@
 const router = require("express").Router();
-const products = require("../productData");
+const ErrorHandler = require("../errors/ErrorHandler");
+let products = require("../productData");
+// const apiKeyMiddleWare = require("../middlewares/apiKey");
 
 router.get("/products", (req, res) =>
   res.render("products", {
     title: "My Product page",
   })
 );
-
-router.get("/api/products", (req, res) => {
+// apiKeyMiddleWare
+router.get("/api/products",  (req, res) => {
   res.json(products);
 });
-router.post("/api/products", (req, res) => {
+router.post("/api/products", (req, res, next) => {
+  // try {
+  //   console.log(city);
+  // } catch (err) {
+  //   next(ErrorHandler.serverError(err.message));
+  // }
   const { name, price } = req.body;
 
   if (!name || !price) {
-    return res.status(422, json({ error: "All fields are required" })); ///un processable entiti
+    next(ErrorHandler.validationError("Name and price fields are required"));
+    // return res.status(422).json({ error: "All fields are required" }); /// Unprocessable Entity
+    // throw new Error("All fields are required");
+    return;
   }
   const product = {
     name,
@@ -25,4 +35,15 @@ router.post("/api/products", (req, res) => {
   products.push(product);
   res.json({ product });
 });
+
+router.delete("/api/products/:prodId", (req, res) => {
+  products = products.filter((prod) => req.params.prodId != prod.id);
+  res.json({ status: "ok" });
+});
+
+// /pending
+// router.put("/api/products/:prodId", (req, res) => {
+//   products = products.map((prod) => req.params.prodId != prod.id);
+//   res.json({ status: "ok" });
+// });
 module.exports = router;

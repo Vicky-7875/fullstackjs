@@ -1,3 +1,5 @@
+const ErrorHandler = require("../errors/ErrorHandler");
+
 function apiKey(req, res, next) {
   const api_key = "1234567";
   //   console.log(req.bo dy);///get from form data
@@ -6,7 +8,8 @@ function apiKey(req, res, next) {
   if (userApiKey && userApiKey === api_key) {
     next();
   } else {
-    res.json({ message: "Not Allowed" });
+    // res.json({ message: "Not Allowed" });
+    next(ErrorHandler.fonbidden('Api key not valid'))
   }
 }
 
