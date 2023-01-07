@@ -1,6 +1,9 @@
-[-] register a user
-[-] login a user
-[-] who am i
+[+] register a user
+[+] login a user
+[+] who am i
+[-] refresh the token
+[-] logout the user
+
 [-] Add new product
 [-] update a product
 [-] get all products
@@ -9,3 +12,6 @@
 
 
 valiadate libaray  JOi
+
+//for secure db
+DB_URL=mongodb://useradmin:secret@localhost:27017/rest-api?authSource=admin&w=1

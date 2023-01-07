@@ -1,7 +1,8 @@
 import Joi from "joi";
 import { CustomErrorHandler, JwtService } from "../../services";
-import { User } from "../../models";
+import { RefreshToken, User } from "../../models";
 import bcrypt from "bcrypt";
+import { REFRESH_SECRET } from "../../config";
 
 // import  from "../../services";
 
@@ -41,7 +42,7 @@ const registerController = {
 
     //check if the user is in the data base alreary
     try {
-      const exist = await User.exists({ email: req.body.emaii });
+      const exist = await User.exists({ email: req.body.email });
       if (exist) {
         return next(
           CustomErrorHandler.alreadyExist("This email Already taken")
@@ -51,7 +52,7 @@ const registerController = {
       return next(err);
     }
 
-    const { name, email,password } = req.body;
+    const { name, email, password } = req.body;
     //hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -62,20 +63,35 @@ const registerController = {
       password: hashedPassword,
     });
     let access_token;
+    let refresh_token;
     try {
       const result = await user.save();
       console.log(result);
 
-      //token
+      //token generate
       access_token = JwtService.sign({
         _id: result._id,
         role: result.role,
       });
+
+      //refresh token
+      refresh_token = JwtService.sign(
+        {
+          _id: result._id,
+          role: result.role,
+        },
+        "1y",
+        REFRESH_SECRET
+      );
+
+      //dabase whitelist
+
+      await RefreshToken.create({ token: refresh_token });
     } catch (error) {
       return next(error);
     }
 
-    res.json({ access_token });
+    res.json({ access_token, refresh_token });
   },
 };
 
