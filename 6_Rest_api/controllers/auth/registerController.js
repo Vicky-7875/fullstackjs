@@ -33,7 +33,6 @@ const registerController = {
       repeat_password: Joi.ref("password"),
     });
 
-    console.log(req.body);
     const { error } = registerSchema.validate(req.body);
     if (error) {
       return next(error);
@@ -66,7 +65,6 @@ const registerController = {
     let refresh_token;
     try {
       const result = await user.save();
-      console.log(result);
 
       //token generate
       access_token = JwtService.sign({
@@ -84,9 +82,10 @@ const registerController = {
         REFRESH_SECRET
       );
 
-      //dabase whitelist
+      //database whitelist
 
       await RefreshToken.create({ token: refresh_token });
+      res.json({ access_token, refresh_token });
     } catch (error) {
       return next(error);
     }

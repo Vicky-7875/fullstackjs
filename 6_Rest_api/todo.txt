@@ -1,14 +1,16 @@
 [+] register a user
 [+] login a user
 [+] who am i
-[-] refresh the token
-[-] logout the user
+[+] refresh the token
+[+] logout the user
 
-[-] Add new product
-[-] update a product
-[-] get all products
-[-] get single product
-[-] delete a product
+
+
+[+] Add new product
+[+] update a product
+[+] get all products
+[+] get single product
+[+] delete a product
 
 
 valiadate libaray  JOi

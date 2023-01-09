@@ -1,8 +1,8 @@
 import Joi from "joi";
-import { User } from "../../models";
+import { RefreshToken, User } from "../../models";
 import bcrypt from "bcrypt";
 import { CustomErrorHandler, JwtService } from "../../services";
-
+import { REFRESH_SECRET } from "../../config";
 const loginController = {
   async login(req, res, next) {
     //validation
@@ -26,7 +26,7 @@ const loginController = {
         return next(CustomErrorHandler.wrongCredentials());
       }
 
-      console.log(user, req.body.password);
+      // console.log(user, req.body.password);
 
       //compare the password
 
@@ -41,10 +41,45 @@ const loginController = {
         _id: user._id,
         role: user.role,
       });
-      res.json({ access_token });
+
+      //refresh token
+      const refresh_token = JwtService.sign(
+        {
+          _id: user._id,
+          role: user.role,
+        },
+        "1y",
+        REFRESH_SECRET
+      );
+
+      //database whitelist
+
+      await RefreshToken.create({ token: refresh_token });
+      res.json({ access_token, refresh_token });
     } catch (err) {
       return next(err);
     }
+  },
+
+  async logout(req, res, next) {
+    //validation
+
+    const refreshSchema = Joi.object({
+      refresh_token: Joi.string().required(),
+    });
+
+    const { error } = refreshSchema.validate(req.body);
+
+    if (error) {
+      return next(error);
+    }
+    try {
+      await RefreshToken.deleteOne({ token: req.body.refresh_token });
+    } catch (err) {
+      return next(new Error("Something went wrong in the database"));
+    }
+
+    res.json({ status: 1 });
   },
 };
 
