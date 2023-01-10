@@ -1,0 +1,3 @@
+
+Using Tailwind CLI
+npx tailwindcss build tailwind.css -o style.css

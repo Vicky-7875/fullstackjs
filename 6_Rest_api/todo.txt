@@ -1,16 +1,40 @@
-[+] register a user
-[+] login a user
-[+] who am i
-[+] refresh the token
-[+] logout the user
+[+] register a user(POST)
+http://localhost:5000/api/register
+
+
+pass header authorization Berear 'jwt token' below request
+
+[+] login a user(POST)
+http://localhost:5000/api/login
+
+[+] who am i(GET)
+http://localhost:5000/api/me
 
 
 
-[+] Add new product
-[+] update a product
-[+] get all products
-[+] get single product
-[+] delete a product
+[+] refresh the token(POST)
+http://localhost:5000/api/refresh
+
+[+] logout the user(POST)
+http://localhost:5000/api/logout
+
+pass header authorization Berear 'jwt token' below request
+
+[+] Add new product(POST)
+http://localhost:5000/api/products
+
+[+] update a product (PUT)
+http://localhost:5000/api/products/63bbea464b3af21eb060e0ff
+
+[+] delete a product(DELETE)
+http://localhost:5000/api/products/63bbf56b0940616cec471045
+
+below request no need to pass token
+[+] get all products(GET)
+http://localhost:5000/api/products
+
+[+] get single product(GET)
+http://localhost:5000/api/products/63bbf35440501a14c5c4e449
 
 
 valiadate libaray  JOi

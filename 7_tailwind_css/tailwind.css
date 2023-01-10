@@ -1,0 +1,20 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.btn {
+  @apply m-2 py-2 px-4 rounded-sm;
+}
+
+/* .btn:hover {
+  @apply bg-indigo-900;
+}
+
+.btn-danger {
+  @apply bg-red-800  text-white;
+}
+.btn-success {
+  @apply bg-green-800  text-white;
+} */
