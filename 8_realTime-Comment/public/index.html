@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RealTime comment system</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <h4>
+            <strong
+              >RealTime Comment system using node,expresss,mongo db,socket.io
+              and vanila js</strong
+            >
+          </h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Necessitatibus rem error dignissimos esse, ipsum nulla. Iure
+            provident dicta voluptates sit earum ad placeat non quae nam, quod,
+            fugit repellendus accusamus.
+          </p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h4 class="border-bottom pb-2">Comments</h4>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="">Write a comment</label>
+            <textarea id="textarea" rows="3" class="form-control"> </textarea>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button
+            class="btn btn-primary m-2"
+            id="submitBtn"
+            style="float: right"
+          >
+            Post Comment
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="typing text-success">
+
+          </div>
+          <div class="comment__box">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+
+
+    <!-- <script src="http://192.168.1.67:3000/socket.io/socket.io.js"></script> -->
+    <script src="http://localhost:4571/socket.io/socket.io.js"></script>
+    <script src="/js/app.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>
